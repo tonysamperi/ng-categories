@@ -91,7 +91,7 @@ Finally, create your list of filters: this will push and splice data from "$scop
 Remember to include the ngCatoggle factory!!
 ```html
 <div class="box" ng-repeat="(key,filter) in panels">
-    <div ng-repeat="f in myList | ngFilters:key">
+    <div ng-repeat="f in myList | ngOnce:key">
         <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}}
     </div>
 </div>
