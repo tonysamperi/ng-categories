@@ -107,23 +107,22 @@ E.g. **cagegoryValue = "ass"**
 
 if **strict** is **false**, will match "ass", "pass", "glass", "bass"...ecc..
 
-otherwise it will match just "ass".
+otherwise it will match **just** "ass".
 
 ###Usage
 
 ```html
-<!-- ... -->
-<my-element ng-repeat="el in myList | ngCategories:panels:strict">
-<!-- ... -->
+<myElement ng-repeat="el in myList | ngCategories:panels:strict"></myElement>
 ```
 
 ##ngOnce:count
+
 If true, filter will count occourrences of filtered values and put the result, as property of the filtered list
+
 ###Usage
+
 ```html
-<!-- ... -->
-<my-element ng-repeat="el in myList | ngOnce:panels:strict">
-<!-- ... -->
+<myElement ng-repeat="el in myList | ngOnce:key:count"></myElement>
 ```
 
 # License
