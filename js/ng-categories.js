@@ -1,20 +1,19 @@
-angular.module('ngCategories', [])
-.filter('ngCategories', ['$filter', function($filter) {
-    return function(list, k) {
+angular.module('ngCategories', []).filter('ngCategories', ['$filter', function($filter) {
+    return function(list, k, strict) {
         var doFilter = {
             data: list,
             filtered: [],
             applyFilter: function(arr, key, countEach) {
                 var d = [];
                 //Resetto la lista filtrata quando cambia un filtro
-                if(countEach === 1) this.filtered = this.data;
+                if (countEach === 1) this.filtered = this.data;
                 //È definito l'argomento e, in caso sia stringa, ha lunghezza >0
                 if (arr) {
                     var o = {};
                     //Gestisco filtri singoli
                     if (angular.isString(arr)) {
                         o[key] = arr;
-                        d = d.concat($filter('filter')(this.filtered, o));
+                        d = d.concat($filter('filter')(this.filtered, o, strict));
                         this.filtered = d;
                     }
                     //Gestisco array di filtri
@@ -25,7 +24,7 @@ angular.module('ngCategories', [])
                                 if (angular.isString(arr[i])) {
                                     //Costruisco fake object da passare come filtro singolo
                                     o[key] = arr[i];
-                                    d = d.concat($filter('filter')(this.filtered, o));
+                                    d = d.concat($filter('filter')(this.filtered, o, strict));
                                 }
                             }
                             this.filtered = d;
@@ -36,39 +35,42 @@ angular.module('ngCategories', [])
             }
         };
         if (angular.isDefined(k)) {
-            var countEach=1;
+            var countEach = 1;
             angular.forEach(k, function(arr, key) {
                 doFilter.applyFilter(arr, key, countEach);
                 countEach++;
             });
-        }
-        else{
+        } else {
             doFilter.filtered = doFilter.data;
         }
         return doFilter.filtered;
     }
-}])
-.filter('ngFilters', function() {
-    return function(input, key) {
+}]).filter('ngOnce', function() {
+    return function(input, key, count) {
         var filtered = {};
         var list = [];
         for (var i = 0; i < input.length; i++) {
-            if ( angular.isUndefined(filtered[input[i][key]]) ) {
-                filtered[input[i][key]] = "";
+            if (angular.isUndefined(filtered[input[i][key]])) {
+                filtered[input[i][key]] = 1;
                 list.push(input[i]);
+            } else {
+                filtered[input[i][key]]++;
+            }
+        }
+        if (count) {
+            for (var i = 0; i < list.length; i++) {
+                list[i].count = filtered[list[i][key]];
             }
         }
         return list;
     };
-})
-.factory('ngCatoggle', function(){
-    return function(target,key){
+}).factory('ngCatoggle', function() {
+    return function(target, key) {
         var index = target.indexOf(key);
-
         if (index === -1) {
             target.push(key);
         } else {
             target.splice(index, 1);
         }
-    }
+    };
 });

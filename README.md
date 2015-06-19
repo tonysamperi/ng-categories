@@ -8,6 +8,9 @@ An easy way to manage data with **AngularJS**!
   - [Introduction](#introduction)
   - [Requirements](#requirements)
   - [Usage](#usage)
+  - [Options](#options)    
+    - [ngCategories:strict](##ngCategories:strict)
+    - [ngOnce:count](##ngOnce:count)
   - [License](#license)
 
 # Introduction
@@ -70,7 +73,7 @@ Almost done, create your list. For example:
         <th>Nationality</th>
     </thead>
     <tbody>
-        <tr ng-repeat="el in filteredList = (myList | ngCategories: panels)">
+        <tr ng-repeat="el in filteredList = (myList | ngCategories:panels)">
             <td>{{$index}}</td>
             <td>{{el.name}}</td>
             <td>{{el.cat}}</td>
@@ -92,6 +95,35 @@ Remember to include the ngCatoggle factory!!
         <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}}
     </div>
 </div>
+```
+
+#Options
+
+##ngCategories:strict
+
+If true, filter will match exactly items in list.
+
+E.g. **cagegoryValue = "ass"**
+
+if **strict** is **false**, will match "ass", "pass", "glass", "bass"...ecc..
+
+otherwise it will match just "ass".
+
+###Usage
+
+```html
+<!-- ... -->
+<my-element ng-repeat="el in myList | ngCategories:panels:strict">
+<!-- ... -->
+```
+
+##ngOnce:count
+If true, filter will count occourrences of filtered values and put the result, as property of the filtered list
+###Usage
+```html
+<!-- ... -->
+<my-element ng-repeat="el in myList | ngOnce:panels:strict">
+<!-- ... -->
 ```
 
 # License
