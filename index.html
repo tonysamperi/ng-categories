@@ -89,8 +89,8 @@
                                 <h3 class="panel-title">{{key}}</h3>
                             </div>
                             <div class="panel-body">
-                                <div ng-repeat="f in myList | ngFilters:key">
-                                    <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}}
+                                <div ng-repeat="f in myList | ngOnce:key:true">
+                                    <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}} ({{f.count}})
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                                 <th>Nationality</th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="el in filteredList = (myList | ngCategories: panels)">
+                                <tr ng-repeat="el in filteredList = (myList | ngCategories:panels:true)">
                                     <td>{{$index}}</td>
                                     <td>{{el.name}}</td>
                                     <td>{{el.cat}}</td>
