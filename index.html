@@ -89,8 +89,8 @@
                                 <h3 class="panel-title">{{key}}</h3>
                             </div>
                             <div class="panel-body">
-                                <div ng-repeat="f in myList | ngOnce:key:true">
-                                    <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}} ({{f.count}})
+                                <div ng-repeat="f in myList | ngOnce:filteredList:key:true">
+                                    <input type="checkbox" ng-click="catoggle(filter,f[key])" />{{f[key]}} ({{f.count || 0}} di {{f.totalCount}})
                                 </div>
                             </div>
                         </div>

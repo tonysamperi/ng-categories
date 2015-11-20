@@ -6,6 +6,7 @@ module.controller("myController", ["$scope", "$http", "ngCatoggle", function($sc
             var response = r.data;
             if (angular.isDefined(response.data)) {
                 $scope.myList = response.data.products;
+                //$scope.fullData = response.data.products;
             }
         }, function(error) {
             console.log("call \"prodotti\" error", error);
