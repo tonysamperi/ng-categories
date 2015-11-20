@@ -47,15 +47,17 @@ angular.module('ngCategories', []).filter('ngCategories', ['$filter', function($
     }
 }]).filter('ngOnce', function() {
     return function(fullData, key, count, filteredData) {
-        var filteredCount = {}; //contiene i filtri non ripetuti
+        var filteredCount = {}; //contiene la conta della lista filtrata
         var fullCount = {}; //contiene la conta totale degli elementi
         var list = [];
-        for (var i = 0; i < filteredData.length; i++) {
-            if (angular.isUndefined(filteredCount[filteredData[i][key]])) {
-                filteredCount[filteredData[i][key]] = 1;
+        if (count) {
+            for (var i = 0; i < filteredData.length; i++) {
+                if (angular.isUndefined(filteredCount[filteredData[i][key]])) {
+                    filteredCount[filteredData[i][key]] = 1;
 
-            } else {
-                filteredCount[filteredData[i][key]]++;
+                } else {
+                    filteredCount[filteredData[i][key]]++;
+                }
             }
         }
         for (var i = 0; i < fullData.length; i++) {

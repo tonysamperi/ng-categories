@@ -120,9 +120,12 @@ otherwise it will match **just** "ass".
 If true, filter will count occourrences of filtered values and put the result, as property of the filtered list
 
 ###Usage
-
+```js
+    $scope.count = true; //(or false)
+```
 ```html
-<myElement ng-repeat="el in myList | ngOnce:key:count"></myElement>
+<myList ng-repeat="= el in filtered = (myList | ngCategories:panels:strict)"></myList>
+<myElement ng-repeat="el in myList | ngOnce:key:count:filtered"></myElement>
 ```
 
 # License
