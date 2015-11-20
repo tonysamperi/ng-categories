@@ -8,3 +8,7 @@ NgCategories History
 - Renamed ngFilters in ngOnce
 - Added option "count" for ngOnce
 - Added option "scrict" for ngCategories
+
+##20/11/2015
+- Added filtered count feature
+- Improved performance
