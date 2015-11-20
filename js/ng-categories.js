@@ -21,8 +21,7 @@ angular.module('ngCategories', []).filter('ngCategories', ['$filter', function($
                         //Se la lunghezza è 0 non devo filtrare
                         if (arr.length > 0) {
                             for (var i = 0; i < arr.length; i++) {
-                                //ovvero arr[i] non è array nè oggetto
-                                if (angular.isString(arr[i]) || !isNaN(arr[i])) {
+                                if (angular.isString(arr[i])) {
                                     //Costruisco fake object da passare come filtro singolo
                                     o[key] = arr[i];
                                     d = d.concat($filter('filter')(this.filtered, o, strict));
@@ -47,20 +46,30 @@ angular.module('ngCategories', []).filter('ngCategories', ['$filter', function($
         return doFilter.filtered;
     }
 }]).filter('ngOnce', function() {
-    return function(input, key, count) {
-        var filtered = {};
+    return function(fullData, filteredData, key, count) {
+        var onced = {}; //contiene i filtri non ripetuti
+        var fullCount = {}; //contiene la conta totale degli elementi
         var list = [];
-        for (var i = 0; i < input.length; i++) {
-            if (angular.isUndefined(filtered[input[i][key]])) {
-                filtered[input[i][key]] = 1;
-                list.push(input[i]);
+        for (var i = 0; i < filteredData.length; i++) {
+            if (angular.isUndefined(onced[filteredData[i][key]])) {
+                onced[filteredData[i][key]] = 1;
+
             } else {
-                filtered[input[i][key]]++;
+                onced[filteredData[i][key]]++;
+            }
+        }
+        for (var i = 0; i < fullData.length; i++) {
+            if (angular.isUndefined(fullCount[fullData[i][key]])) {
+                fullCount[fullData[i][key]] = 1;
+                list.push(fullData[i]);
+            } else {
+                fullCount[fullData[i][key]]++;
             }
         }
         if (count) {
             for (var i = 0; i < list.length; i++) {
-                list[i].count = filtered[list[i][key]];
+                list[i].totalCount = fullCount[list[i][key]];
+                list[i].count = onced[list[i][key]];
             }
         }
         return list;
