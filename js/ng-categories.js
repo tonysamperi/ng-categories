@@ -21,7 +21,8 @@ angular.module('ngCategories', []).filter('ngCategories', ['$filter', function($
                         //Se la lunghezza è 0 non devo filtrare
                         if (arr.length > 0) {
                             for (var i = 0; i < arr.length; i++) {
-                                if (angular.isString(arr[i])) {
+                                //ovvero arr[i] non è array nè oggetto
+                                if (angular.isString(arr[i]) || !isNaN(arr[i])) {
                                     //Costruisco fake object da passare come filtro singolo
                                     o[key] = arr[i];
                                     d = d.concat($filter('filter')(this.filtered, o, strict));
