@@ -125,8 +125,12 @@ If true, filter will count occourrences of filtered values and put the result, a
 ```
 ```html
 <myList ng-repeat="= el in filtered = (myList | ngCategories:panels:strict)"></myList>
-<myElement ng-repeat="el in myList | ngOnce:key:count:filtered"></myElement>
+<myElement ng-repeat="el in myList | ngOnce:key:count:filtered">
+	{{el.name}} ({{el.count}} of {{el.totalCount}})
+</myElement>
 ```
+
+A "count" and a "totalCount" properties will be set into each element of your list
 
 # License
 
